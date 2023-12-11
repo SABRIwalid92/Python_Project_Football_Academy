@@ -1,7 +1,13 @@
 from flask_app import app
 from flask import render_template, redirect, request, flash, session
-# from flask_app.models.offer import Offer
+from flask_app.models.offer import Offer
 from flask_app.models.player import Player
+
+
+
+@app.route('/players/<int:id>/add_stats')
+def add_stats(id):
+    redirect("/dashboard")
 
 
 

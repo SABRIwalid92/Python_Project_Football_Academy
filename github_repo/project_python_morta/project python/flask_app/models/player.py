@@ -1,17 +1,13 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app import DATABASE
-from flask_app.models import user
+from flask_app.models.user import User
 
 
 
 
-class Player:
+class Player(User):
     def __init__(self, data):
-        self.id = data['id']
-        self.first_name = data['first_name']
-        self.last_name = data['last_name']
-        self.email = data['email']
-        self.password = data['password']
+        super().__init__(data)
         self.age = data['age']
         self.weight = data['weight']
         self.height = data['height']
@@ -33,6 +29,15 @@ class Player:
 
 
 
+    @classmethod
+    def get_all_players(cls):
+        query = "SELECT *FROM players;"
+        results = connectToMySQL(DATABASE).query_db(query)
+        all_players = []
+        for row in results:
+            all_players.append(cls(row))
+        return all_players
+    
     @classmethod
     def get_all_players(cls):
         query = "SELECT *FROM players;"
