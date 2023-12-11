@@ -76,10 +76,7 @@ def dash():
     if "user_id" not in session:
         return redirect("/")
     data = {"type" : session["type"], "id": session["user_id"]}
-    print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDATA\n{data}")
     loggedin_user = User.get_user_by_id(data)
-    print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n loggedIN\n{loggedin_user}")
-
     # all_arbortrarys=user.get_all_()
     
     return render_template(f"{loggedin_user.type}_dashboard.html", loggedin_user=loggedin_user)
