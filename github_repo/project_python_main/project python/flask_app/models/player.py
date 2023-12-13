@@ -32,8 +32,23 @@ class Player(User):
         # self.poster = user.User.get_by_id({"id": self.user_id})
 
 
-
-
+    @classmethod
+    def create(cls, data):
+        data = {**data, "type" : "players"}
+        return   User.create(data)
+    
+    @classmethod
+    def get_player_by_id(cls, data):
+        data ={**data, "type" : "players"}
+        
+        return User.get_user_by_id(data)
+    
+    @classmethod
+    def get_by_email(cls, data):
+        data = {**data, "type" : "players"}
+        
+        return  User.get_by_email(data)
+    
     @classmethod
     def add_stats(cls,data):
         query = f"""
@@ -63,13 +78,6 @@ class Player(User):
         return all_players
 
 
-    @classmethod
-    def get_player_by_id(cls, data):
-        query = """
-        SELECT * FROM players 
-        WHERE id = %(id)s;"""
-        result = connectToMySQL(DATABASE).query_db(query,data)
-        return cls(result[0])
     
     @staticmethod
     def calculate_age(birthdate):

@@ -1,7 +1,7 @@
 from flask_app import app
 from flask import render_template, redirect, request, flash, session
-# from flask_app.models.user_model import User
 from flask_app.models.user import User
+from flask_app.models.player import Player
 from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt(app)
@@ -10,6 +10,10 @@ bcrypt = Bcrypt(app)
 
 
 @app.route("/")
+def home():
+    
+    return render_template("home.html")
+@app.route("/index")
 def index():
     
     return render_template("index.html",d_login="d-none",d_reg="")
@@ -41,14 +45,14 @@ def user_register():
 
     session["user_id"] = user_id
     session["type"] = data["type"]
-    return redirect("/dashboard")
+    return redirect(f"/{session["type"]}/{session["user_id"]}/dashboard")
 
 
 # Login - method - ACTION
 @app.route("/users/login", methods=["POST"])
 def user_login():
-    data = {"type": request.form["type"], "email": request.form["email"]}
-    user_in_db = User.get_by_email(data)
+    # data = {"type": request.form["type"], "email": request.form["email"]}
+    user_in_db = User.get_by_email({"email" : request.form["email"]})
     # if email not found
     if not user_in_db:
         flash("invalid credentials", "log")
@@ -61,8 +65,8 @@ def user_login():
     # * if all is good
     print(f"===> id = {user_in_db.id}")
     session["user_id"] = user_in_db.id
-    session["type"] = data["type"]
-    return redirect("/dashboard")
+    session["type"] = user_in_db.type
+    return redirect(f"/{session["type"]}/{session["user_id"]}/dashboard")
     
     
     
@@ -70,8 +74,8 @@ def user_login():
     
     
     # Display Route - Dashboard
-@app.route("/dashboard")
-def dash():
+@app.route(f"/<string:type>/<int:id>/dashboard")
+def dash(type,id):
     # ! Route Guard
     if "user_id" not in session:
         return redirect("/")

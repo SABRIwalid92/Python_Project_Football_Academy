@@ -47,12 +47,15 @@ class User:
     @classmethod
     def get_by_email(cls, data):
         query = f"""
-                    SELECT * FROM  {data["type"]}
-                    WHERE  {data["type"]}.email = %(email)s;
+                    SELECT id, first_name, last_name, email, password, type, created_at, updated_at FROM scouts WHERE email = %(email)s
+                    UNION SELECT id, first_name, last_name, email, password, type, created_at, updated_at FROM   trainers WHERE  email = %(email)s
+                    UNION SELECT id, first_name, last_name, email, password, type, created_at, updated_at FROM players   
+                    WHERE  email = %(email)s;
+                    
                 """
 
         result = connectToMySQL(DATABASE).query_db(query, data)
-        if len(result) < 1:
+        if not result :
             return False
 
         return cls(result[0])
@@ -75,8 +78,8 @@ class User:
             flash("Invalid email address", "reg")
             is_valid = False
         else:
-            # data_for_email = {"email": data["email"]}
-            potential_user = User.get_by_email(data)
+            data_for_email = {"email": data["email"]}
+            potential_user = User.get_by_email(data_for_email)
             if potential_user:
                 is_valid = False
                 flash("email already taken, hopefully by you! ", "reg")

@@ -4,12 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Scouts</title>
+   
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
+    <!-- <link rel="stylesheet" href="../static/scout.css"> -->
   </head>
 
   <body class="container">
@@ -17,7 +19,12 @@
     <a href="/logout" class="btn btn-danger">LOGOUT</a>
     <a href="/" class="btn btn-secondary">Go to offers</a>
 
-    <h3>welcome,{{loggedin_user.first_name}}</h3>
+    <div class="text">
+        <span class="text first-text"></span>
+        <span class="text sec-text"></span>
+    </div>
+   
+   
     <hr />
     <p>List of my offers accepted from trainers</p>
     <table class="table">
@@ -28,48 +35,161 @@
         <th>height</th>
         <th>Age</th>
         <th>skills</th>
+        <th>trainer</th>
       </tr>
       <tr>
-        <td>1234</td>
-        <td>left wing</td>
-        <td>100</td>
-        <td>165</td>
-        <td>19</td>
-        <td>68</td>
+        {% for offer in all_offers %}
+        <tr>
+            <td> <div onmouseover="toggleButtons('{{ offer.id }}')" onmouseout="hideButtons('{{ offer.id }}')">
+              {{ offer.id }}
+              <div id="buttons_{{ offer.id }}" class="d-none">
+                <a href="/offers/show/{{ offer.id }}" class="btn btn-info btn-sm mr-1">View</a>
+                {% if offer.user_id == user.id %}
+                  <a href="/offers/edit/{{ offer.id }}" class="btn btn-warning btn-sm mr-1">Edit</a>
+                  <a href="/offers/delete/{{ offer.id }}" class="btn btn-danger btn-sm">Delete</a>
+                {% endif %}
+              </div>
+            </div></td>
+            <td>
+                {{ offer.position }}
+            </td>
+            <td>{{ offer.weight }}</td>
+            <td>{{ offer.height }}</td>
+            <td>{{ offer.age }}</td>
+            
+            <td> <div onmouseover="showSkills('{{ offer.id }}')" onmouseout="hideSkills('{{ offer.id }}')">
+              {{ offer.skills }}
+              <div id="skills_{{ offer.id }}" class="d-none">
+                
+                <dl class="row bg-info bg-opacity-10 border border-3 border-dark rounded">
+                  
+                  
+                  <dl class="row bg-info bg-opacity-10 border border-3 border-dark rounded">
+                    <dt class="col-sm-3 text-primary">,,,,,,ll</dt>
+                    <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
+                    <dt class="col-sm-3 text-primary">Description lists</dt>
+                    <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
+                    <dt class="col-sm-3 text-primary">Description lists</dt>
+                    <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
+                    <dt class="col-sm-3 text-primary">Description lists</dt>
+                    <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
+                    <dt class="col-sm-3 text-primary">Description lists</dt>
+                    <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
+                    <dt class="col-sm-3 text-primary">Description lists</dt>
+                    <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
+                  </dl>
+                  
+                </dl>
+              </div>
+            </div> </td>
+            <td>{{trainers.first_name}}</td>
+
+           
+        </tr>
+        {% endfor %}
       </tr>
     </table>
 
-	<p class="display-3" >travail demandé:</p>
-	<ol>
-		<li>	<p><i>page html hethi </i></p></li>
-		<li>	<p><i>page html offers of trainers </i></p></li>
-		<li> offers model (create, get_all, get_by_id) </li>
-		<li> offers controller </li>
-		<li> Scouts controller
-			<p><strong>(thabet fi users controller, fih les fonctionnalities de login et register. 
-				ma n3awdouhomch fl controller lo5rin )</strong></p> </li>
-		<li>Scout model
-			<p><strong>(juste na5dmou constructor, les classmethods 
-				aprés kif nest7a99ou 7aja tet5dem bl wa9t)</strong></p> </li>
-		</li>
-	</ol>
-	
-		
+    <div class="image">
+        <img src="/flask_app/templates/assets/afp_en_8babdc7097ec6fee1abae432795b6a69b4e22b4d.jpg" alt="">
+        <img src="/flask_app/templates/assets/IMG_2514-1024x683.jpg" alt="">
+        <img src="/flask_app/templates/assets/IMG_2557-1024x683.jpg" alt="">
+    </div>
+<style>
 
 
 
+.text {
+  font-size: 3rem;
+  font-weight: bold;
+}
+.first-text {
+  color: white;
+}
 
-	<p><i>(NB: el <STRONG>68</STRONG> fl skills hethi tji "a" link (modal, mawjouda 
-		fi bootstrap) tenzel 3liha ttala3 card fiha score hetha mnin ja mn8ir formule,
-		juste card fiha les valeurs stamina, kicking, speed, physique, technique, reflex )</i></p>
+.sec-text::before {
+  content: "";
+  display: flex;
+  position: absolute;
+  background-color: white;
+  width: 50rem;
+  height: 4rem;
+  left: 7rem;
+  top: 6.5rem;
+  border-left: 0.3rem solid black;
+  animation-direction: reverse;
+  animation: animation 4s steps(12) infinite;
+}
+
+@keyframes animation {
+  40%,
+  60% {
+    left: 40%;
+  }
+  100% {
+    left: 10%;
+  }
+}
+
+.image {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5rem;
+  margin-left: 5rem;
+}
+
+.image img {
+  width: 30%;
+  padding-left: 2rem;
+}
+
+</style>
 
 
-    <p><i>(NB: el <STRONG>1234</STRONG> fl id hethi tji "a" link tenzel 3liha thezzik li one_offer (page html o5ra)
-      card fiha details mta3 el offer lkol, ma3neha fiha zeda les valeurs stamina, kicking, speed, physique, technique, reflex )</i></p>
-  
+    <script>
+      function toggleButtons(id) {
+        var buttons = document.getElementById('buttons_' + id);
+        buttons.classList.remove('d-none');
+        buttons.classList.add('d-block');
+      }
 
+      function hideButtons(id) {
+        var buttons = document.getElementById('buttons_' + id);
+        buttons.classList.remove('d-block');
+        buttons.classList.add('d-none');
+      }
 
-    <img src="https://www.icegif.com/wp-content/uploads/2022/07/icegif-823.gif" alt="💋🎲">
+      function showSkills(id) {
+        var skills = document.getElementById('skills_' + id);
+        skills.classList.remove('d-none');
+        skills.classList.add('d-block');
+      }
 
+      function hideSkills(id) {
+        var skills = document.getElementById('skills_' + id);
+        skills.classList.remove('d-block');
+        skills.classList.add('d-none');
+      }
+
+    const text = document.querySelector('.sec-text');
+
+    const textLoad = () => {
+        setTimeout(() =>{
+            text.textContent = "welcome, ";
+        }, 0);
+
+        setTimeout(() =>{
+            text.textContent = "{{loggedin_user.first_name}}";
+        }, 4000);
+        
+
+        // setTimeout(() =>{
+        //     text.textContent = "";
+        // }, 8000);
+    }
+
+    textLoad();
+    setInterval(textLoad, 12000);
+</script>
   </body>
 </html>

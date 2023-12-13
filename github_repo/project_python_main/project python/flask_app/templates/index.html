@@ -1,178 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Reg</title>
-
-    <!-- Bootstrap CSS link -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
     <style>
-        body {
-            background-color: #f8f9fa;
-            background-image: no-repeat;
-        }
+      body {
+        background-color: #f8f9fa;
+        background-image: no-repeat;
+      }
 
-        .container {
-            margin-top: 50px;
-        }
+      .container {
+        margin-top: 50px;
+      }
 
-        h1 {
-            color: #007bff;
-        }
+      h1 {
+        color: #007bff;
+      }
 
-        h3 {
-            color: #343a40;
-        }
+      h3 {
+        color: #343a40;
+      }
 
-        .form-container {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+      .form-container {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
 
-        .form-container label {
-            color: #495057;
-        }
+      .form-container label {
+        color: #495057;
+      }
 
-        .form-container input,
-        .form-container button {
-            margin-top: 10px;
-        }
+      .form-container input,
+      .form-container button {
+        margin-top: 10px;
+      }
 
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
+      .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+      }
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
+      .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
 
-        .text-danger {
-            color: #dc3545;
-        }
+      .text-danger {
+        color: #dc3545;
+      }
+
+      label {
+        color: white;
+        font-size: larger;
+      }
+
+      p {
+        color: white;
+        font-size: larger;
+      }
+
+      h3 {
+        color: white;
+      }
     </style>
-</head>
+  </head>
 
-<body
-    style="background-color: #4c689c; background-image: url('https://watermark.lovepik.com/photo/50091/3009.jpg_wh1200.jpg');  ">
-    <div class="container ">
-        <div class=" row d-flex justify-content-center gap-3" style="min-height:620px">
-            <div class=" card bg-image col-5 widgetcontainer p-5 text-center shadow-1-strong rounded  text-white auth-image-content-container  "
-                style="background-image: url('https://images.pexels.com/photos/102448/pexels-photo-102448.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr1'); ">
-                <div class="card-header">FOOTBALL</div>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-            </div>
-
-            <!-- Register Form -->
-            <div class=" {{d_reg}} col-5 ">
-                <div class="form-container ">
-                    <h3>Register</h3>
-                    {% with messages = get_flashed_messages(category_filter=["reg"]) %}
-                    <!-- declare a variable called messages -->
-                    {% if messages %}
-                    <!-- check if there are any messages -->
-                    {% for message in messages %}
-                    <!-- loop through the messages -->
-                    <p class="text-danger">{{message}}</p>
-                    <!-- display each message in a paragraph tag -->
-                    {% endfor %} {% endif %} {% endwith %}
-
-                    <form action="/users/register" method="post">
-                        <div class="mb-3 w-50">
-                            <label for="first_name" class="form-label">First Name</label>
-                            <input type="text" class="form-control shadow" id="first_name" name="first_name" />
-                        </div>
-                        <div class="mb-3 w-50">
-                            <label for="last_name" class="form-label">Last Name</label>
-                            <input type="text" class="form-control shadow" id="last_name" name="last_name" />
-                        </div>
-                        <div class="mb-3 w-50">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control shadow" id="email" name="email" />
-
-                        </div>
-
-
-
-                        <div class="mb-3 w-50">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control shadow" id="password" name="password" />
-                        </div>
-                        <div class="mb-3 w-50">
-                            <label for="confirm_password" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control shadow" id="confirm_password"
-                                name="confirm_password" />
-                        </div>
-                    
-                        <select class="form-select" aria-label="Default select example" name="type">
-                            <option selected>Open this select menu</option>
-                            <option value="players">player</option>
-                            <option value="scouts">scout</option>
-                            <option value="trainers">trainer</option>
-                        </select>
-
-                        <input type="submit" class="btn btn-primary">Register</input>
-
-
-                        <p class="text-center">Already have an account? <a href="/login">Login here</a></p>
-
-                    </form>
+  <body>
+    <section class="video-background">
+      <video
+        autoplay
+        muted
+        loop
+        id="video-background"
+        class="fullscreen-video w-100"
+      >
+        <source
+          src="{{ url_for('static', filename='assets/pexels-cottonbro-10349005 (Original).mp4') }}"
+          type="video/mp4"
+        />
+      </video>
+      <div class="content container">
+        <div
+          class="row d-flex justify-content-center gap-3"
+          style="min-height: 620px"
+        >
+          <div
+            class="card bg-image col-5 widgetcontainer p-5 text-center shadow-1-strong rounded text-white auth-image-content-container"
+            style="
+              background-image: url('https://images.pexels.com/photos/102448/pexels-photo-102448.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr1');
+            "
+          >
+            <div class="card-header">FOOTBALL</div>
+            <p class="card-text">
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
+            </p>
+          </div>
+          <div class="{{d_reg}} col-6">
+            <div>
+              <h3>Register</h3>
+              {% with messages = get_flashed_messages(category_filter=["reg"])
+              %}
+              <!-- declare a variable called messages -->
+              {% if messages %}
+              <!-- check if there are any messages -->
+              {% for message in messages %}
+              <!-- loop through the messages -->
+              <p class="text-danger">{{message}}</p>
+              <!-- display each message in a paragraph tag -->
+              {% endfor %} {% endif %} {% endwith %}
+              <form action="/users/register" method="post">
+                <div class="mb-3 w-50">
+                  <label for="first_name" class="form-label">First Name</label>
+                  <input
+                    type="text"
+                    class="form-control shadow opacity-50"
+                    id="first_name"
+                    name="first_name"
+                  />
                 </div>
+                <div class="mb-3 w-50">
+                  <label for="last_name" class="form-label">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control shadow opacity-50"
+                    id="last_name"
+                    name="last_name"
+                  />
+                </div>
+                <div class="mb-3 w-50">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="text"
+                    class="form-control shadow opacity-50"
+                    id="email"
+                    name="email"
+                  />
+                </div>
+                <div class="mb-3 w-50">
+                  <label for="password" class="form-label">Password</label>
+                  <input
+                    type="password"
+                    class="form-control shadow opacity-50"
+                    id="password"
+                    name="password"
+                  />
+                </div>
+                <div class="mb-3 w-50">
+                  <label for="confirm_password" class="form-label"
+                    >Confirm Password</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control shadow opacity-50"
+                    id="confirm_password"
+                    name="confirm_password"
+                  />
+                </div>
+                <select
+                  class="form-select opacity-50"
+                  aria-label="Default select example"
+                  name="type"
+                >
+                  <option selected>Open this select menu</option>
+                  <option value="players">player</option>
+                  <option value="scouts">scout</option>
+                  <option value="trainers">trainer</option>
+                </select>
+                <button type="submit" class="btn btn-outline-primary mt-2">
+                  SIGN UP
+                </button>
+                <p class="text-center mt-2">
+                  Already have an account? <a href="/login">Login here</a>
+                </p>
+              </form>
             </div>
+          </div>
+          <div class=" {{d_login}} col-6">
+            <h3>Login</h3>
+            {% with messages = get_flashed_messages(category_filter=["log"]) %}
+            <!-- declare a variable called messages -->
+            {% if messages %}
+            <!-- check if there are any messages -->
+            {% for message in messages %}
+            <!-- loop through the messages -->
+            <p class="text-danger">{{message}}</p>
+            <!-- display each message in a paragraph tag -->
+            {% endfor %} {% endif %} {% endwith %}
 
-            <!-- Login Form -->
-            <div class=" {{d_login}} col-5  form-container">
-
-                <h3>Login</h3>
-                {% with messages = get_flashed_messages(category_filter=["log"]) %}
-                <!-- declare a variable called messages -->
-                {% if messages %}
-                <!-- check if there are any messages -->
-                {% for message in messages %}
-                <!-- loop through the messages -->
-                <p class="text-danger">{{message}}</p>
-                <!-- display each message in a paragraph tag -->
-                {% endfor %} {% endif %} {% endwith %}
-
-                <form action="/users/login" class="d-flex flex-column justify-content-center" style="min-height:500px" 
-                    method="post">
-                    <div class="mb-3">
-                        <label for="login_email" class="form-label">Email</label>
-                        <input type="text" class="form-control shadow" id="login_email" name="email" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="login_password" class="form-label">Password</label>
-                        <input type="password" class="form-control shadow" id="login_password" name="password" />
-                    </div>
-                    <select class="form-select" aria-label="Default select example" name="type">
-                        <option selected value="">Open this select menu</option>
-                        <option value="players">player</option>
-                        <option value="scouts">scout</option>
-                        <option value="trainers">trainer</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                    <p class="text-center">Are new here? let's get you up and running⚽! </p>
-                    <a class="text-center" href="/">Sign Up</a>
-                </form>
-
-
-
-
-
-
-
-            </div>
+            <form
+              action="/users/login"
+              class="d-flex flex-column justify-content-center"
+              style="min-height: 500px"
+              method="post"
+            >
+              <div class="mb-3">
+                <label for="login_email" class="form-label">Email</label>
+                <input
+                  type="text"
+                  class="form-control shadow opacity-50"
+                  id="login_email"
+                  name="email"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="login_password" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control shadow opacity-50"
+                  id="login_password"
+                  name="password"
+                />
+              </div>
+              <button type="submit" class="btn btn-outline-primary mt-2">
+                Login
+              </button>
+              <p class="text-center">
+                Are new here? let's get you up and running⚽!
+              </p>
+              <a class="text-center" href="/index">Sign Up</a>
+            </form>
+          </div>
         </div>
-
-    </div>
-</body>
-
+      </div>
+    </section>
+  </body>
 </html>

@@ -26,7 +26,7 @@ class Offer:
     
     @classmethod
     def get_all(cls):
-        query = "SELECT *FROM offers;"
+        query = "SELECT * FROM offers;"
         results = connectToMySQL(DATABASE).query_db(query)
         all_offers = []
         for row in results:
