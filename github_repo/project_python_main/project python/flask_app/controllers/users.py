@@ -77,7 +77,6 @@ def dash():
         return redirect("/")
     data = {"type" : session["type"], "id": session["user_id"]}
     loggedin_user = User.get_user_by_id(data)
-    # all_arbortrarys=user.get_all_()
     
     return render_template(f"{loggedin_user.type}_dashboard.html", loggedin_user=loggedin_user)
     

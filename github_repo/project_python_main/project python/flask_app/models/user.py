@@ -3,6 +3,7 @@ from flask_app import DATABASE
 from flask import flash
 import re
 
+
 EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$")
 
 
@@ -26,6 +27,8 @@ class User:
                 """
 
         return connectToMySQL(DATABASE).query_db(query, data)
+    
+
 
     # ? === GET USER BY ID
     @classmethod
