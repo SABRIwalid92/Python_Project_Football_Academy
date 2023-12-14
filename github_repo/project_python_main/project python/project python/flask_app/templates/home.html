@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/flask_app/static/style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="d-flex justify-content-around align-items-center sticky-top bg-dark">
+        <div class="d-flex gap-5">
+            <a href="/" class="btn w3-hover-black">
+                <i class="fa fa-home w3-xlarge text-light"></i>
+                <p class="text-light"><small>HOME</small></p>
+            </a>
+            <a href="#about" class="btn w3-hover-black">
+                <i class="fa fa-user w3-xlarge text-light"></i>
+                <p class="text-light"><small>ABOUT US</small></p>
+            </a>
+            <a href="/contact" class="btn w3-hover-black">
+                <i class="fa fa-envelope w3-xlarge text-light"></i>
+                <p class="text-light"><small>CONTACT US</small></p>
+            </a>
+        </div>
+        <div>
+            <a href="/index" class="btn btn-light w3-hover-black">
+                <p>REGISTER</p>
+            </a>
+            <a href="/login" class="btn btn-light w3-hover-black">
+                <p>LOGIN</p>
+            </a>
+        </div>
+    </nav>
+    <div>
+        <section>
+            <video autoplay muted loop width="100%">
+                <source src="{{ url_for('static', filename='assets/pexels-cottonbro-10349005 (Original).mp4') }}"
+                    type="video/mp4">
+            </video>
+        </section>
+        <section>
+            <div class="container">Welcome to Football, a vibrant community dedicated to all things football!
+                Our platform was founded with the vision
+                of bringing together football enthusiasts from around the globe, providing a space where fans, players,
+                 coaches, and anyone passionate about the beautiful game can connect, engage, and celebrate their
+                  love for football.
+           
+               Our mission is simple yet powerful: 
+               to create a hub where football lovers of all ages and backgrounds can come together
+                to share their experiences, insights, and enthusiasm for the sport. Whether you're a seasoned fan,
+                 a budding player, a coach, or someone just diving into the world of football, 
+                 Footbol aims to be your go-to destination for all things related to this incredible sport.
+               
+               We're committed to fostering a positive, inclusive, and informative environment where discussions flourish,
+                knowledge is shared, and the love for football unites us all. Through engaging content, discussions,
+                
+                latest news, expert analysis, and a vibrant community, 
+                we strive to make Footbol the ultimate destination for everyone passionate about football.
+               </div>
+               <a href=""><button id="btnseend">Read More</button></a>
+        </section>
+    </div>
+</body>
