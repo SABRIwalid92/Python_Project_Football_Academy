@@ -1,6 +1,5 @@
 from flask_app import app
 from flask import render_template, redirect, request, flash, session
-from flask_app.models.user import User
 from flask_app.models.player import Player
 from flask_bcrypt import Bcrypt
 
@@ -13,6 +12,8 @@ bcrypt = Bcrypt(app)
 def home():
     
     return render_template("home.html")
+
+
 @app.route("/index")
 def index():
     
@@ -41,7 +42,8 @@ def user_register():
     
     data = {**request.form,"password": pw_hashed}
     # save user in DB
-    user_id = User.create(data)
+    user_id = User.create(data)    
+
 
     session["user_id"] = user_id
     session["type"] = data["type"]
@@ -79,9 +81,23 @@ def dash(type,id):
     # ! Route Guard
     if "user_id" not in session:
         return redirect("/")
-    data = {"type" : session["type"], "id": session["user_id"]}
+    data = {"id": session["user_id"]}
     loggedin_user = User.get_user_by_id(data)
     
+    loggedin_user = Player.create(loggedin_user)
+    print(f"\n\n\n\n\n\n\n\n\n\n\n\nlogeedin{loggedin_user}")    
+
+    # loggedin_user = Player.get_player_by_id({"id" : loggedin_user})
+
+    # if loggedin_user.type == "players":
+    if loggedin_user.page == 2:
+        return redirect("/create_player2")
+    elif loggedin_user.page == 3:
+        return redirect("/create_player3")
+    elif loggedin_user.page == 4:
+        render_template("players_dashboard.html", loggedin_user=loggedin_user)
+    else :
+        return redirect("/create_player")
     return render_template(f"{loggedin_user.type}_dashboard.html", loggedin_user=loggedin_user)
     
     

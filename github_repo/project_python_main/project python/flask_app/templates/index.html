@@ -98,15 +98,31 @@
           style="min-height: 620px"
         >
           <div
+            id="bg_img_select"
             class="card bg-image col-5 widgetcontainer p-5 text-center shadow-1-strong rounded text-white auth-image-content-container"
             style="
+              overflow: hidden;
+
               background-image: url('https://images.pexels.com/photos/102448/pexels-photo-102448.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr1');
+              background-repeat: no-repeat;
+
+              background-size: cover;
             "
           >
             <div class="card-header">FOOTBALL</div>
             <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
+              <select
+                onchange="type_select()"
+                class="form-select opacity-50"
+                aria-label="Default select example"
+                name="type"
+                id="type"
+              >
+                <option selected>CHOOSE YOUR ROLE!</option>
+                <option value="scouts">SCOUT</option>
+                <option value="trainers">TRAINER</option>
+                <option value="players">PLAYER</option>
+              </select>
             </p>
           </div>
           <div class="{{d_reg}} col-6">
@@ -122,7 +138,8 @@
               <p class="text-danger">{{message}}</p>
               <!-- display each message in a paragraph tag -->
               {% endfor %} {% endif %} {% endwith %}
-              <form action="/users/register" method="post">
+
+              <form id="reg" action="/scouts/register" method="post">
                 <div class="mb-3 w-50">
                   <label for="first_name" class="form-label">First Name</label>
                   <input
@@ -170,7 +187,7 @@
                     name="confirm_password"
                   />
                 </div>
-                <select
+                <!-- <select
                   class="form-select opacity-50"
                   aria-label="Default select example"
                   name="type"
@@ -179,7 +196,7 @@
                   <option value="players">player</option>
                   <option value="scouts">scout</option>
                   <option value="trainers">trainer</option>
-                </select>
+                </select> -->
                 <button type="submit" class="btn btn-outline-primary mt-2">
                   SIGN UP
                 </button>
@@ -202,7 +219,8 @@
             {% endfor %} {% endif %} {% endwith %}
 
             <form
-              action="/users/login"
+              id="log"
+              action="/scouts/login"
               class="d-flex flex-column justify-content-center"
               style="min-height: 500px"
               method="post"
@@ -237,5 +255,43 @@
         </div>
       </div>
     </section>
+
+    <script>
+      function type_select() {
+        select = document.getElementById("type");
+        bg_img_select = document.getElementById("bg_img_select");
+        reg = document.getElementById("reg");
+        log = document.getElementById("log");
+
+        switch (select.value) {
+          case "scouts":
+            console.log(bg_img_select);
+            reg.action = "/scouts/register";
+            log.action = "/scouts/login";
+            bg_img_select.style =
+              " background: url('../static/assets/bg_img_scout.gif'); background-size: cover;";
+            break;
+          case "trainers":
+            console.log(bg_img_select);
+            reg.action = "/trainers/register";
+            log.action = "/trainers/login";
+            bg_img_select.style =
+              " background: url('../static/assets/bg_img_trainer.gif'); background-size: cover;";
+
+            break;
+          case "players":
+            console.log(bg_img_select);
+            reg.action = "/players/register";
+            log.action = "/players/login";
+            bg_img_select.style =
+              " background: url('../static/assets/bg_img_player.gif'); background-size: cover;";
+
+            break;
+
+          default:
+            break;
+        }
+      }
+    </script>
   </body>
 </html>

@@ -7,7 +7,7 @@ import re
 EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$")
 
 
-class Scout:
+class Trainer:
     def __init__(self, data):
         self.id = data["id"]
         self.first_name = data["first_name"]
@@ -17,21 +17,21 @@ class Scout:
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
 
-    # ? ==== CREATE A scout ====
+    # ? ==== CREATE A Trainer ====
     @classmethod
     def create(cls, data):
         query = f"""
-                INSERT INTO  scouts (first_name, last_name, email, password)
+                INSERT INTO  trainers (first_name, last_name, email, password)
                 VALUES (%(first_name)s,%(last_name)s,%(email)s,%(password)s);
                 """
 
         return connectToMySQL(DATABASE).query_db(query, data)
     
-    # ? === GET scouts BY ID
+    # ? === GET trainers BY ID
     @classmethod
     def get_user_by_id(cls, data):
         query = f"""
-                    SELECT * FROM scouts 
+                    SELECT * FROM trainers 
                     WHERE  id = %(id)s;
                     
                 """
@@ -45,7 +45,7 @@ class Scout:
     @classmethod
     def get_by_email(cls, data):
         query = f"""
-                    SELECT * FROM scouts 
+                    SELECT * FROM trainers 
                     WHERE  email = %(email)s;
                     
                 """
@@ -55,7 +55,7 @@ class Scout:
             return False
 
         return cls(result[0]) # type: ignore
-#  scouts VALIDATE =========
+#  trainers VALIDATE =========
     @staticmethod
     def validate(data):
         is_valid = True
@@ -74,7 +74,7 @@ class Scout:
             is_valid = False
         else:
             # data_for_email = {"email": data["email"]}
-            potential_user = Scout.get_by_email(data)
+            potential_user = Trainer.get_by_email(data)
             if potential_user:
                 is_valid = False
                 flash("email already taken, hopefully by you! ", "reg")

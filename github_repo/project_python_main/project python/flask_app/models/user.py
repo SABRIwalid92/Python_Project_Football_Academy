@@ -22,8 +22,8 @@ class User:
     @classmethod
     def create(cls, data):
         query = f"""
-                INSERT INTO  {data["type"]} (first_name, last_name, email, password)
-                VALUES (%(first_name)s,%(last_name)s,%(email)s,%(password)s);
+                INSERT INTO  users (first_name, last_name, email, password, type)
+                VALUES (%(first_name)s,%(last_name)s,%(email)s,%(password)s, %(type)s);
                 """
 
         return connectToMySQL(DATABASE).query_db(query, data)
@@ -34,11 +34,12 @@ class User:
     @classmethod
     def get_user_by_id(cls, data):
         query = f"""
-                     SELECT * FROM  {data["type"]}
-                    WHERE  {data["type"]}.id = %(id)s;
+                    SELECT * FROM users 
+                    WHERE  users.id = %(id)s;
+                    
                 """
-        result = connectToMySQL(DATABASE).query_db(query, data)
-        if len(result) < 1:
+        result = connectToMySQL(DATABASE).query_db(query, data)        
+        if not result :
             return False
 
         return cls(result[0])
@@ -47,9 +48,7 @@ class User:
     @classmethod
     def get_by_email(cls, data):
         query = f"""
-                    SELECT id, first_name, last_name, email, password, type, created_at, updated_at FROM scouts WHERE email = %(email)s
-                    UNION SELECT id, first_name, last_name, email, password, type, created_at, updated_at FROM   trainers WHERE  email = %(email)s
-                    UNION SELECT id, first_name, last_name, email, password, type, created_at, updated_at FROM players   
+                    SELECT * FROM users 
                     WHERE  email = %(email)s;
                     
                 """
