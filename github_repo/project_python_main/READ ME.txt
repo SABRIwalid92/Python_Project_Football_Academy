@@ -1,1 +1,0 @@
-*Login-Registration fully working for all tables
